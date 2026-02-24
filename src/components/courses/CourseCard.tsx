@@ -8,7 +8,9 @@ import {
   Pencil,
   Trash2,
   BarChart3,
+  Eye,
 } from "lucide-react";
+import Link from "next/link";
 
 interface Course {
   id: string;
@@ -86,9 +88,11 @@ export default function CourseCard({
 
       {/* Content */}
       <div className="p-5 space-y-3">
-        <h3 className="text-lg font-bold text-text-primary line-clamp-1 group-hover:gradient-text transition-all">
-          {course.title}
-        </h3>
+        <Link href={`/courses/${course.id}`} className="block group/title">
+          <h3 className="text-lg font-bold text-text-primary line-clamp-1 group-hover/title:gradient-text transition-all">
+            {course.title}
+          </h3>
+        </Link>
 
         <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed">
           {course.description}
@@ -116,6 +120,13 @@ export default function CourseCard({
 
         {/* Actions */}
         <div className="flex items-center gap-2 pt-3 border-t border-border-default">
+          <Link
+            href={`/courses/${course.id}`}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-medium text-accent-primary bg-accent-primary/5 hover:bg-accent-primary/10 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Eye size={13} />
+            View
+          </Link>
           <button
             onClick={() => onEdit(course)}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-medium text-accent-secondary bg-accent-primary/10 hover:bg-accent-primary/20 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
