@@ -56,6 +56,7 @@ const courses = [
     level: "Advanced",
     category: "Web Development",
     price: 89.99,
+    image_url: "https://picsum.photos/seed/react19/800/400",
   },
   {
     title: "Next.js 16 Full-Stack Bootcamp",
@@ -66,6 +67,7 @@ const courses = [
     level: "Intermediate",
     category: "Web Development",
     price: 79.99,
+    image_url: "https://picsum.photos/seed/nextjs16/800/400",
   },
   {
     title: "HTML & CSS for Beginners",
@@ -76,6 +78,7 @@ const courses = [
     level: "Beginner",
     category: "Web Development",
     price: 29.99,
+    image_url: "https://picsum.photos/seed/htmlcss/800/400",
   },
   {
     title: "TypeScript Pro Patterns",
@@ -86,6 +89,7 @@ const courses = [
     level: "Advanced",
     category: "Web Development",
     price: 69.99,
+    image_url: "https://picsum.photos/seed/typescript/800/400",
   },
   {
     title: "Vue.js 3 Composition API",
@@ -96,6 +100,7 @@ const courses = [
     level: "Intermediate",
     category: "Web Development",
     price: 59.99,
+    image_url: "https://picsum.photos/seed/vuejs3/800/400",
   },
   {
     title: "Svelte & SvelteKit Complete Guide",
@@ -106,6 +111,7 @@ const courses = [
     level: "Intermediate",
     category: "Web Development",
     price: 54.99,
+    image_url: "https://picsum.photos/seed/svelte/800/400",
   },
   {
     title: "JavaScript Fundamentals A-Z",
@@ -116,6 +122,7 @@ const courses = [
     level: "Beginner",
     category: "Web Development",
     price: 39.99,
+    image_url: "https://picsum.photos/seed/javascript/800/400",
   },
   {
     title: "Tailwind CSS Mastery",
@@ -126,6 +133,7 @@ const courses = [
     level: "Beginner",
     category: "Web Development",
     price: 34.99,
+    image_url: "https://picsum.photos/seed/tailwindcss/800/400",
   },
   {
     title: "Node.js Backend Architecture",
@@ -136,6 +144,7 @@ const courses = [
     level: "Advanced",
     category: "Web Development",
     price: 84.99,
+    image_url: "https://picsum.photos/seed/nodejs/800/400",
   },
   {
     title: "GraphQL API Development",
@@ -146,6 +155,7 @@ const courses = [
     level: "Intermediate",
     category: "Web Development",
     price: 64.99,
+    image_url: "https://picsum.photos/seed/graphql/800/400",
   },
 
   // Mobile Development (5)
@@ -158,6 +168,7 @@ const courses = [
     level: "Intermediate",
     category: "Mobile Development",
     price: 74.99,
+    image_url: "https://picsum.photos/seed/reactnative/800/400",
   },
   {
     title: "Flutter & Dart Complete Course",
@@ -168,6 +179,7 @@ const courses = [
     level: "Beginner",
     category: "Mobile Development",
     price: 69.99,
+    image_url: "https://picsum.photos/seed/flutter/800/400",
   },
   {
     title: "iOS Development with SwiftUI",
@@ -178,6 +190,7 @@ const courses = [
     level: "Intermediate",
     category: "Mobile Development",
     price: 79.99,
+    image_url: "https://picsum.photos/seed/swiftui/800/400",
   },
   {
     title: "Kotlin Android Development",
@@ -188,6 +201,7 @@ const courses = [
     level: "Intermediate",
     category: "Mobile Development",
     price: 64.99,
+    image_url: "https://picsum.photos/seed/kotlin/800/400",
   },
   {
     title: "Progressive Web Apps (PWA)",
@@ -198,6 +212,7 @@ const courses = [
     level: "Advanced",
     category: "Mobile Development",
     price: 49.99,
+    image_url: "https://picsum.photos/seed/pwa/800/400",
   },
 
   // Data Science (5)
@@ -210,6 +225,7 @@ const courses = [
     level: "Beginner",
     category: "Data Science",
     price: 59.99,
+    image_url: "https://picsum.photos/seed/pythondata/800/400",
   },
   {
     title: "Advanced Data Visualization",
@@ -220,6 +236,7 @@ const courses = [
     level: "Advanced",
     category: "Data Science",
     price: 74.99,
+    image_url: "https://picsum.photos/seed/dataviz/800/400",
   },
   {
     title: "Statistics & Probability Essentials",
@@ -230,6 +247,7 @@ const courses = [
     level: "Intermediate",
     category: "Data Science",
     price: 49.99,
+    image_url: "https://picsum.photos/seed/statistics/800/400",
   },
   {
     title: "SQL for Data Analysis",
@@ -240,6 +258,7 @@ const courses = [
     level: "Beginner",
     category: "Data Science",
     price: 39.99,
+    image_url: "https://picsum.photos/seed/sqldata/800/400",
   },
   {
     title: "Big Data with Apache Spark",
@@ -250,6 +269,7 @@ const courses = [
     level: "Advanced",
     category: "Data Science",
     price: 89.99,
+    image_url: "https://picsum.photos/seed/spark/800/400",
   },
 
   // Machine Learning (5)
@@ -262,6 +282,7 @@ const courses = [
     level: "Intermediate",
     category: "Machine Learning",
     price: 89.99,
+    image_url: "https://picsum.photos/seed/machinelearn/800/400",
   },
   {
     title: "Deep Learning with PyTorch",
@@ -272,6 +293,7 @@ const courses = [
     level: "Advanced",
     category: "Machine Learning",
     price: 99.99,
+    image_url: "https://picsum.photos/seed/pytorch/800/400",
   },
   {
     title: "Natural Language Processing",
@@ -282,6 +304,7 @@ const courses = [
     level: "Advanced",
     category: "Machine Learning",
     price: 84.99,
+    image_url: "https://picsum.photos/seed/nlp/800/400",
   },
   {
     title: "Computer Vision with OpenCV",
@@ -292,6 +315,7 @@ const courses = [
     level: "Intermediate",
     category: "Machine Learning",
     price: 69.99,
+    image_url: "https://picsum.photos/seed/opencv/800/400",
   },
   {
     title: "AI & Prompt Engineering",
@@ -302,6 +326,7 @@ const courses = [
     level: "Beginner",
     category: "Machine Learning",
     price: 54.99,
+    image_url: "https://picsum.photos/seed/aiprompt/800/400",
   },
 
   // Cloud Computing (5)
@@ -314,6 +339,7 @@ const courses = [
     level: "Advanced",
     category: "Cloud Computing",
     price: 99.99,
+    image_url: "https://picsum.photos/seed/aws/800/400",
   },
   {
     title: "Google Cloud Platform Essentials",
@@ -324,6 +350,7 @@ const courses = [
     level: "Intermediate",
     category: "Cloud Computing",
     price: 74.99,
+    image_url: "https://picsum.photos/seed/gcp/800/400",
   },
   {
     title: "Azure DevOps & Cloud Services",
@@ -334,6 +361,7 @@ const courses = [
     level: "Intermediate",
     category: "Cloud Computing",
     price: 79.99,
+    image_url: "https://picsum.photos/seed/azure/800/400",
   },
   {
     title: "Serverless Architecture",
@@ -344,6 +372,7 @@ const courses = [
     level: "Advanced",
     category: "Cloud Computing",
     price: 64.99,
+    image_url: "https://picsum.photos/seed/serverless/800/400",
   },
   {
     title: "Cloud Security Fundamentals",
@@ -354,6 +383,7 @@ const courses = [
     level: "Intermediate",
     category: "Cloud Computing",
     price: 59.99,
+    image_url: "https://picsum.photos/seed/cloudsec/800/400",
   },
 
   // DevOps (5)
@@ -366,6 +396,7 @@ const courses = [
     level: "Advanced",
     category: "DevOps",
     price: 84.99,
+    image_url: "https://picsum.photos/seed/docker/800/400",
   },
   {
     title: "CI/CD Pipeline Engineering",
@@ -376,6 +407,7 @@ const courses = [
     level: "Intermediate",
     category: "DevOps",
     price: 64.99,
+    image_url: "https://picsum.photos/seed/cicd/800/400",
   },
   {
     title: "Infrastructure as Code with Terraform",
@@ -386,6 +418,7 @@ const courses = [
     level: "Intermediate",
     category: "DevOps",
     price: 59.99,
+    image_url: "https://picsum.photos/seed/terraform/800/400",
   },
   {
     title: "Linux System Administration",
@@ -396,6 +429,7 @@ const courses = [
     level: "Beginner",
     category: "DevOps",
     price: 44.99,
+    image_url: "https://picsum.photos/seed/linux/800/400",
   },
   {
     title: "Monitoring & Observability",
@@ -406,6 +440,7 @@ const courses = [
     level: "Advanced",
     category: "DevOps",
     price: 69.99,
+    image_url: "https://picsum.photos/seed/monitoring/800/400",
   },
 
   // Cybersecurity (4)
@@ -418,6 +453,7 @@ const courses = [
     level: "Advanced",
     category: "Cybersecurity",
     price: 94.99,
+    image_url: "https://picsum.photos/seed/hacking/800/400",
   },
   {
     title: "Network Security Essentials",
@@ -428,6 +464,7 @@ const courses = [
     level: "Intermediate",
     category: "Cybersecurity",
     price: 59.99,
+    image_url: "https://picsum.photos/seed/netsec/800/400",
   },
   {
     title: "Web Application Security",
@@ -438,6 +475,7 @@ const courses = [
     level: "Intermediate",
     category: "Cybersecurity",
     price: 54.99,
+    image_url: "https://picsum.photos/seed/websec/800/400",
   },
   {
     title: "Cybersecurity for Beginners",
@@ -448,6 +486,7 @@ const courses = [
     level: "Beginner",
     category: "Cybersecurity",
     price: 34.99,
+    image_url: "https://picsum.photos/seed/cybersec/800/400",
   },
 
   // UI/UX Design (4)
@@ -460,6 +499,7 @@ const courses = [
     level: "Beginner",
     category: "UI/UX Design",
     price: 49.99,
+    image_url: "https://picsum.photos/seed/figma/800/400",
   },
   {
     title: "Design Systems at Scale",
@@ -470,6 +510,7 @@ const courses = [
     level: "Advanced",
     category: "UI/UX Design",
     price: 74.99,
+    image_url: "https://picsum.photos/seed/designsys/800/400",
   },
   {
     title: "User Research & Testing",
@@ -480,6 +521,7 @@ const courses = [
     level: "Intermediate",
     category: "UI/UX Design",
     price: 44.99,
+    image_url: "https://picsum.photos/seed/uxresearch/800/400",
   },
   {
     title: "Mobile UX Design Patterns",
@@ -490,6 +532,7 @@ const courses = [
     level: "Intermediate",
     category: "UI/UX Design",
     price: 39.99,
+    image_url: "https://picsum.photos/seed/mobileux/800/400",
   },
 
   // Database (4)
@@ -502,6 +545,7 @@ const courses = [
     level: "Advanced",
     category: "Database",
     price: 79.99,
+    image_url: "https://picsum.photos/seed/postgres/800/400",
   },
   {
     title: "MongoDB Complete Developer Guide",
@@ -512,6 +556,7 @@ const courses = [
     level: "Intermediate",
     category: "Database",
     price: 64.99,
+    image_url: "https://picsum.photos/seed/mongodb/800/400",
   },
   {
     title: "Redis for High-Performance Apps",
@@ -522,6 +567,7 @@ const courses = [
     level: "Intermediate",
     category: "Database",
     price: 49.99,
+    image_url: "https://picsum.photos/seed/redis/800/400",
   },
   {
     title: "Database Design & Modeling",
@@ -532,6 +578,7 @@ const courses = [
     level: "Beginner",
     category: "Database",
     price: 44.99,
+    image_url: "https://picsum.photos/seed/dbdesign/800/400",
   },
 
   // Blockchain (2)
@@ -544,6 +591,7 @@ const courses = [
     level: "Advanced",
     category: "Blockchain",
     price: 89.99,
+    image_url: "https://picsum.photos/seed/solidity/800/400",
   },
   {
     title: "Blockchain Fundamentals",
@@ -554,6 +602,7 @@ const courses = [
     level: "Beginner",
     category: "Blockchain",
     price: 39.99,
+    image_url: "https://picsum.photos/seed/blockchain/800/400",
   },
 
   // Game Development (1)
@@ -566,6 +615,7 @@ const courses = [
     level: "Intermediate",
     category: "Game Development",
     price: 74.99,
+    image_url: "https://picsum.photos/seed/unity/800/400",
   },
 ];
 
@@ -597,6 +647,21 @@ async function seed() {
 
   console.log(`📊 Existing courses: ${existingCount ?? 0}`);
 
+  // 2.5 Delete existing courses
+  if ((existingCount ?? 0) > 0) {
+    console.log(`\n🗑️ Deleting ${existingCount} existing courses...`);
+    const { error: deleteError } = await supabase
+      .from("courses")
+      .delete()
+      .eq("user_id", userId);
+
+    if (deleteError) {
+      console.error("❌ Failed to delete existing courses:", deleteError.message);
+      process.exit(1);
+    }
+    console.log("✅ Existing courses deleted.");
+  }
+
   // 3. Insert courses in batches of 10
   console.log(`\n📦 Inserting ${courses.length} courses...\n`);
 
@@ -608,7 +673,6 @@ async function seed() {
     const batch = courses.slice(i, i + batchSize).map((course) => ({
       ...course,
       user_id: userId,
-      image_url: "",
     }));
 
     const { error } = await supabase.from("courses").insert(batch);
@@ -632,7 +696,7 @@ async function seed() {
   console.log(`🎉 Seeding complete!`);
   console.log(`   ✅ Inserted: ${inserted}`);
   if (failed > 0) console.log(`   ❌ Failed: ${failed}`);
-  console.log(`   📊 Total courses: ${(existingCount ?? 0) + inserted}`);
+  console.log(`   📊 Total courses: ${inserted}`);
   console.log("━".repeat(50));
 
   await supabase.auth.signOut();

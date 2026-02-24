@@ -89,7 +89,21 @@ Open [http://localhost:3000](http://localhost:3000) — you'll be redirected to 
 3. Check your email to verify (if email confirmation is enabled in Supabase)
 4. Log in and start creating courses!
 
-## 🔧 Tech Stack
+## 🌐 Deployment
+
+### Deploy to Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+
+1. Push your code to a GitHub repository.
+2. Import your repository into Vercel.
+3. Configure the following **Environment Variables**:
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase `anon` public key.
+4. Vercel will automatically detect Next.js and build the project.
+
+> **Note:** Ensure your Supabase **Authentication Settings** have the correct **Site URL** and **Redirect URLs** configured for your production domain (e.g., `https://your-app.vercel.app`).
+
 
 | Technology            | Purpose                                          |
 | --------------------- | ------------------------------------------------ |
