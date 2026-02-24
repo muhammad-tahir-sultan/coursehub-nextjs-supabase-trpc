@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { keepPreviousData } from "@tanstack/react-query";
 import CourseCard from "./CourseCard";
 import CourseForm from "./CourseForm";
 import Pagination from "./Pagination";
-import { Plus, Search, BookOpen, Sparkles, X, RefreshCw } from "lucide-react";
+import CourseListHero from "./CourseListHero";
+import CourseListSkeleton from "./CourseListSkeleton";
+import { BookOpen, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import ConfirmModal from "../ui/ConfirmModal";
 
@@ -31,48 +33,40 @@ export default function CourseList() {
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [courseToDelete, setCourseToDelete] = useState<{
-    id: string;
-    title: string;
-  } | null>(null);
+  const [courseToDelete, setCourseToDelete] = useState<{ id: string; title: string } | null>(null);
 
-  // Debounce search input
+  // Filter Logic
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
-      setPage(1); // Reset to first page on search
+      setPage(1);
     }, 400);
     return () => clearTimeout(timer);
   }, [search]);
 
-  // Fetch courses
+  // Data Fetching
   const { data, isLoading, isFetching, refetch } = trpc.course.list.useQuery(
     { page, limit: 9, search: debouncedSearch || undefined },
-    { placeholderData: keepPreviousData },
+    { placeholderData: keepPreviousData }
   );
 
-  // Mutations
+  // Mutation Handlers
   const createMutation = trpc.course.create.useMutation({
     onSuccess: () => {
       toast.success("Course created successfully! 🎉");
-      setShowForm(false);
+      handleCloseForm();
       refetch();
     },
-    onError: (err) => {
-      toast.error(err.message);
-    },
+    onError: (err) => toast.error(err.message),
   });
 
   const updateMutation = trpc.course.update.useMutation({
     onSuccess: () => {
       toast.success("Course updated successfully! ✨");
-      setEditingCourse(null);
-      setShowForm(false);
+      handleCloseForm();
       refetch();
     },
-    onError: (err) => {
-      toast.error(err.message);
-    },
+    onError: (err) => toast.error(err.message),
   });
 
   const deleteMutation = trpc.course.delete.useMutation({
@@ -87,35 +81,24 @@ export default function CourseList() {
       toast.error(err.message || "Failed to delete course");
       setDeletingId(null);
       setIsConfirmOpen(false);
-      setCourseToDelete(null);
     },
   });
 
-  const handleCreate = useCallback(
-    (formData: Omit<Course, "id" | "created_at">) => {
-      createMutation.mutate(formData);
-    },
-    [createMutation],
-  );
+  // Callbacks
+  const handleCreate = useCallback((formData: Omit<Course, "id" | "created_at">) => createMutation.mutate(formData), [createMutation]);
 
-  const handleUpdate = useCallback(
-    (formData: Omit<Course, "id" | "created_at">) => {
-      if (!editingCourse) return;
-      updateMutation.mutate({ id: editingCourse.id, ...formData });
-    },
-    [editingCourse, updateMutation],
-  );
+  const handleUpdate = useCallback((formData: Omit<Course, "id" | "created_at">) => {
+    if (!editingCourse) return;
+    updateMutation.mutate({ id: editingCourse.id, ...formData });
+  }, [editingCourse, updateMutation]);
 
-  const handleDelete = useCallback(
-    (id: string) => {
-      const course = data?.courses?.find((c: Course) => c.id === id);
-      if (course) {
-        setCourseToDelete({ id: course.id, title: course.title });
-        setIsConfirmOpen(true);
-      }
-    },
-    [data?.courses],
-  );
+  const handleDelete = useCallback((id: string) => {
+    const course = data?.courses?.find((c: Course) => c.id === id);
+    if (course) {
+      setCourseToDelete({ id: course.id, title: course.title });
+      setIsConfirmOpen(true);
+    }
+  }, [data?.courses]);
 
   const confirmDelete = useCallback(() => {
     if (courseToDelete) {
@@ -134,158 +117,75 @@ export default function CourseList() {
     setEditingCourse(null);
   }, []);
 
+  const courseCards = useMemo(() => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 stagger-children">
+      {data?.courses?.map((course: Course, index: number) => (
+        <CourseCard
+          key={course.id}
+          course={course}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          index={index}
+        />
+      ))}
+    </div>
+  ), [data?.courses, handleEdit, handleDelete]);
+
+  const emptyState = (
+    <div className="flex flex-col items-center justify-center py-32 px-4 animate-fade-in-up">
+      <div className="flex h-28 w-28 items-center justify-center rounded-[2.5rem] bg-gradient-to-br from-accent-primary/20 to-accent-secondary/10 mb-8 pulse-glow">
+        <BookOpen size={48} className="text-accent-primary" />
+      </div>
+      <h3 className="text-2xl font-black text-text-primary mb-3">
+        {debouncedSearch ? "No courses found" : "Ready to start?"}
+      </h3>
+      <p className="text-text-secondary font-medium mb-10 text-center max-w-sm leading-relaxed">
+        {debouncedSearch
+          ? `We couldn't find any courses matching "${debouncedSearch}".`
+          : "Your course catalog is currently empty. Let's create something amazing today."}
+      </p>
+      {!debouncedSearch && (
+        <button
+          onClick={() => { setEditingCourse(null); setShowForm(true); }}
+          className="flex items-center gap-3 px-10 py-4 font-bold text-white bg-gradient-to-r from-accent-primary to-accent-secondary rounded-2xl shadow-xl shadow-accent-primary/25 transition-all hover:shadow-accent-primary/40 hover:scale-[1.05]"
+        >
+          <Plus size={20} />
+          Create First Course
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-b from-accent-primary/5 via-bg-primary to-bg-primary pt-8 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-            <div>
-              <div className="flex items-center gap-2 text-accent-secondary text-sm font-medium mb-2">
-                <Sparkles size={16} />
-                <span>Course Management</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-text-primary mb-2">
-                My <span className="gradient-text">Courses</span>
-              </h1>
-              <p className="text-text-secondary text-sm sm:text-base">
-                {data?.totalCount
-                  ? `${data.totalCount} course${data.totalCount !== 1 ? "s" : ""} in your collection`
-                  : "Start building your course collection"}
-              </p>
-            </div>
+      <CourseListHero
+        totalCount={data?.totalCount}
+        search={search}
+        onSearchChange={setSearch}
+        onAddClick={() => { setEditingCourse(null); setShowForm(true); }}
+        isFetching={isFetching}
+      />
 
-            <button
-              onClick={() => {
-                setEditingCourse(null);
-                setShowForm(true);
-              }}
-              className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl shadow-lg shadow-accent-primary/25 transition-all hover:shadow-accent-primary/40 hover:scale-[1.02] active:scale-[0.98] self-start sm:self-auto"
-            >
-              <Plus size={18} />
-              Add Course
-            </button>
-          </div>
-
-          {/* Search Bar */}
-          <div className="mt-8 relative max-w-lg">
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search courses by title or description..."
-              className="w-full pl-12 pr-10 py-3.5 bg-bg-card border border-border-default rounded-xl text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all text-sm"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
-              >
-                <X size={16} />
-              </button>
-            )}
-            {isFetching && (
-              <div className="absolute right-10 top-1/2 -translate-y-1/2">
-                <RefreshCw
-                  size={14}
-                  className="animate-spin text-accent-primary"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20">
         {isLoading ? (
-          // Skeleton loading
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-bg-card border border-border-default rounded-2xl overflow-hidden"
-              >
-                <div className="h-40 skeleton" />
-                <div className="p-5 space-y-3">
-                  <div className="h-6 w-3/4 skeleton" />
-                  <div className="h-4 w-full skeleton" />
-                  <div className="h-4 w-2/3 skeleton" />
-                  <div className="grid grid-cols-2 gap-2 pt-2">
-                    <div className="h-3 skeleton" />
-                    <div className="h-3 skeleton" />
-                  </div>
-                  <div className="flex gap-2 pt-3">
-                    <div className="flex-1 h-10 skeleton" />
-                    <div className="flex-1 h-10 skeleton" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <CourseListSkeleton />
         ) : data?.courses && data.courses.length > 0 ? (
           <>
-            {/* Course Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 stagger-children">
-              {data.courses.map((course: Course, index: number) => (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  index={index}
-                />
-              ))}
-            </div>
-
-            {/* Pagination */}
+            {courseCards}
             <Pagination
               currentPage={data.currentPage}
               totalPages={data.totalPages}
               onPageChange={setPage}
             />
-
-            {/* Results info */}
-            <div className="text-center mt-4 text-xs text-text-muted">
-              Showing page {data.currentPage} of {data.totalPages} (
-              {data.totalCount} total courses)
+            <div className="text-center mt-6 text-[10px] uppercase tracking-widest font-black text-text-muted">
+              Page {data.currentPage} of {data.totalPages} • {data.totalCount} Total
             </div>
           </>
         ) : (
-          // Empty state
-          <div className="flex flex-col items-center justify-center py-24 px-4">
-            <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10 mb-6 pulse-glow">
-              <BookOpen size={40} className="text-accent-primary" />
-            </div>
-            <h3 className="text-xl font-bold text-text-primary mb-2">
-              {debouncedSearch ? "No courses found" : "No courses yet"}
-            </h3>
-            <p className="text-text-secondary text-sm mb-6 text-center max-w-sm">
-              {debouncedSearch
-                ? `No courses match "${debouncedSearch}". Try a different search term.`
-                : "Create your first course to get started with your collection."}
-            </p>
-            {!debouncedSearch && (
-              <button
-                onClick={() => {
-                  setEditingCourse(null);
-                  setShowForm(true);
-                }}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl shadow-lg shadow-accent-primary/25 transition-all hover:shadow-accent-primary/40 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Plus size={18} />
-                Create First Course
-              </button>
-            )}
-          </div>
+          emptyState
         )}
       </div>
 
-      {/* Deletion Confirmation */}
       <ConfirmModal
         isOpen={isConfirmOpen}
         onClose={() => !deletingId && setIsConfirmOpen(false)}
@@ -295,7 +195,6 @@ export default function CourseList() {
         isLoading={deleteMutation.isPending}
       />
 
-      {/* Course Form Modal */}
       {showForm && (
         <CourseForm
           course={editingCourse}
