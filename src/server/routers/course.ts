@@ -20,7 +20,8 @@ export const courseRouter = router({
         .from("courses")
         .select("*", { count: "exact" })
         .eq("user_id", ctx.user.id)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .order("id", { ascending: false });
 
       if (search) {
         query = query.or(
